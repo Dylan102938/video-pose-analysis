@@ -1,6 +1,7 @@
 import logging
 import sys
 import time
+import json
 
 from tf_pose.estimator import TfPoseEstimator
 from tf_pose.networks import get_graph_path, model_wh
@@ -16,13 +17,25 @@ ch.setLevel(logging.DEBUG)
 formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s')
 ch.setFormatter(formatter)
 logger.addHandler(ch)
+w = 0
+h = 0
+resize_out_ratio = 4.0
 
 e = TfPoseEstimator(get_graph_path("cmu"), target_size=(432, 368))
 
 
 def pose_estimate(path, path_write):
     images = os.listdir(path)
+    images.sort()
+    print(images)
+    humans_json = {}
+    humans_json['frames'] = []
+    with open(path_write, "w") as outfile:
+        outfile.write('{"frames": [')
 
+    part_names = ["head", "neck", "rshoulder", "relbow", "rhand", "lshoulder", "leblow", "lhand",
+                  "rhip", "rknee", "rfoot", "lhip", "lknee", "lfoot", "reye", "leye", "rear", "lear"]
+    count = 0
     for file in images:
         image = common.read_imgfile(os.path.join(path, file), None, None)
         if image is None:
@@ -30,10 +43,38 @@ def pose_estimate(path, path_write):
             sys.exit(-1)
 
         t = time.time()
-        humans = e.inference(image, resize_to_default=True)
+        humans = e.inference(image, resize_to_default=(w > 0 and h > 0), upsample_size=resize_out_ratio)
+
+        # body parts
+        frame_content = '{'
+        for i in range(0, len(humans[0].body_parts)):
+            try:
+                body_part = humans[0].body_parts[i]
+            except KeyError:
+                body_part = -1
+
+            if body_part != -1:
+                frame_content += '"' + part_names[i] + 'x":' + str(body_part.x * image.shape[1]) + ", "
+                frame_content += '"' + part_names[i] + 'y":' + str(body_part.x * image.shape[0]) + ", "
+            else:
+                frame_content += '"' + part_names[i] + 'x":' + "-1, "
+                frame_content += '"' + part_names[i] + 'y":' + "-1, "
+
+        frame_content = frame_content[:-2]
+        frame_content += '},'
+
+        with open(path_write, 'a') as outfile:
+            if count == len(images) - 1:
+                outfile.write(frame_content[:-1])
+            else:
+                outfile.write(frame_content)
+
         elapsed = time.time() - t
         logger.info('inference image: %s in %.4f seconds.' % (image, elapsed))
+        count += 1
 
+    with open(path_write, 'a') as outfile:
+        outfile.write(']}')
 
 def main():
 
@@ -54,5 +95,4 @@ def main():
 
 
 if __name__ == '__main__':
-    parse_video
     main()

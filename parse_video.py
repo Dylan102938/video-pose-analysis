@@ -1,5 +1,5 @@
-import math
 import os
+import math
 
 import cv2
 
@@ -38,8 +38,8 @@ def main():
         if not ret:
             break
 
-        if frameid % 10 == 0:
-            filename = base_videos + 'frame' + str(int(x)) + ".jpg"
+        if frameid % math.floor(framerate) == 0 or frameid % math.floor(framerate) == math.floor(framerate/2):
+            filename = base_videos + 'frame' + str(int(x)).zfill(6) + ".jpg"
             print(filename)
             x += 1
             cv2.imwrite(filename, frame)

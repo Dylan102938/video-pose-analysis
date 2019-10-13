@@ -403,6 +403,8 @@ class TfPoseEstimator:
                 center = (int(body_part.x * image_w + 0.5), int(body_part.y * image_h + 0.5))
                 centers[i] = center
                 cv2.circle(npimg, center, 3, common.CocoColors[i], thickness=3, lineType=8, shift=0)
+                cv2.putText(npimg, ("%2f" % body_part.x) + ", " + ("%2f" % body_part.y), (int(body_part.x*image_w + 10.5), int(body_part.y*image_h + 10.5)),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             # draw line
             for pair_order, pair in enumerate(common.CocoPairsRender):
