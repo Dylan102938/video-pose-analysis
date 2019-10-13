@@ -2,18 +2,22 @@ import math
 
 
 def vectorDifference(Vx, Vy, Vx1, Vy1):
-    UVX = Vx / math.sqrt(Vx * Vx + Vy * Vy)
-    UVY = Vy / math.sqrt(Vx * Vx + Vy * Vy)
-    UVX1 = Vx1 / math.sqrt(Vx1 * Vx1 + Vy1 * Vy1)
-    UVY1 = Vy1 / math.sqrt(Vx1 * Vx1 + Vy1 * Vy1)
-    differencex = abs((UVX - UVX1) / UVX)
-    differencey = abs((UVY - UVY1) / UVY)
-    return (differencex + differencey) / 4
+    try:
+        UVX = Vx / math.sqrt(Vx * Vx + Vy * Vy)
+        UVY = Vy / math.sqrt(Vx * Vx + Vy * Vy)
+        UVX1 = Vx1 / math.sqrt(Vx1 * Vx1 + Vy1 * Vy1)
+        UVY1 = Vy1 / math.sqrt(Vx1 * Vx1 + Vy1 * Vy1)
+        differencex = abs((UVX - UVX1) / UVX)
+        differencey = abs((UVY - UVY1) / UVY)
+        return (differencex + differencey) / 4
+    except:
+        return 0
 
 
 def averageError(frame, person1, person2):
     v1 = []
     v2 = []
+
     v1x1 = person1[frame][2] - person1[frame][0]
     v1.append(v1x1)
     v1y1 = person1[frame][3] - person1[frame][1]
@@ -121,10 +125,12 @@ def averageError(frame, person1, person2):
     v2.append(v2y13)
 
     sum = 0.0
-    print(len(v1))
-    for i in range(0, int(len(v1)/2) - 1):
-        sum += vectorDifference(v1[i], v1[i+1], v2[i], v2[i+1])
-        i += 1
-    avg = sum/len(v1/2)
+    count = 0
+
+    for i in range(0, int(len(v1)/2)):
+        sum += vectorDifference(v1[count], v1[count+1], v2[count], v2[count+1])
+        count += 2
+
+    avg = sum/(len(v1))
 
     return avg

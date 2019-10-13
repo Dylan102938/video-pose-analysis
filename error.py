@@ -26,9 +26,6 @@ def main():
             frame2[0][counter] = frame2json[part_names[i] + 'y']
             counter += 1
 
-        print(frame1)
-        print(frame2)
-
         print("Average error: " + str(pose_similarity.averageError(0, frame1, frame2)))
 
 
