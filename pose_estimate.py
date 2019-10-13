@@ -47,10 +47,10 @@ def pose_estimate(path, path_write):
 
         # body parts
         frame_content = '{'
-        for i in range(0, len(humans[0].body_parts)):
+        for i in range(0, 18):
             try:
                 body_part = humans[0].body_parts[i]
-            except KeyError:
+            except:
                 body_part = -1
 
             if body_part != -1:

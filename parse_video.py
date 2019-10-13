@@ -18,7 +18,7 @@ def cleardirectory(path):
 
 def main():
     base_file = "videos/"
-    extension_file = "sample2.mp4"
+    extension_file = "dancing.mp4"
     file = base_file + extension_file
 
     base_videos = "images/base-videos/"
