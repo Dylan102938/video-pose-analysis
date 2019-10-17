@@ -27,7 +27,7 @@ def parsevideo(file, path):
         if not ret:
             break
 
-        if frameid % math.floor(framerate/10) == 0:
+        if frameid % math.floor(framerate / math.floor(1/0.15)) == 0:
             filename = path + 'frame' + str(int(x)).zfill(6) + ".jpg"
             print(filename)
             x += 1
