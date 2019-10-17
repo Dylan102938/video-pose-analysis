@@ -40,9 +40,9 @@ def main():
             video2[i][counter] = video2json[i][part_names[j] + 'y']
             counter += 1
 
-        print("Average error on frame " + str(i) + ": " + "%.3f" % pose_similarity.averageError(i, video1, video2))
+        print("Average error on frame " + str(i + 1) + ": " + "%.3f" % pose_similarity.averageError(i, video1, video2))
 
-        if pose_similarity.averageError(i, video1, video2) > 0.1:
+        if pose_similarity.averageError(i, video1, video2) > 0.15:
             framesoff += 1
             frameswrong.append(i)
 

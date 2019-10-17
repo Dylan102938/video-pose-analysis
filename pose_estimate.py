@@ -63,6 +63,8 @@ def pose_estimate(path, path_write):
         elapsed = time.time() - t
         count += 1
 
+        print("Finished " + file)
+
     with open(path_write, 'a') as outfile:
         outfile.write(']}')
 
