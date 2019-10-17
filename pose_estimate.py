@@ -7,13 +7,12 @@ from tf_pose.estimator import TfPoseEstimator
 from tf_pose.networks import get_graph_path, model_wh
 from tf_pose import common
 import os
-import parse_video
+import cv2
 
-w = 0
-h = 0
+w, h = model_wh('432x368')
 resize_out_ratio = 4.0
 
-e = TfPoseEstimator(get_graph_path("cmu"), target_size=(432, 368))
+e = TfPoseEstimator(get_graph_path("cmu"), target_size=(w, h))
 
 
 def pose_estimate(path, path_write):
@@ -63,7 +62,9 @@ def pose_estimate(path, path_write):
         elapsed = time.time() - t
         count += 1
 
-        print("Finished " + file)
+        print("Finished " + file, " in ", elapsed)
+        image = TfPoseEstimator.draw_humans(image, humans, imgcopy=False)
+        cv2.imwrite(os.path.join(path, file), image)
 
     with open(path_write, 'a') as outfile:
         outfile.write(']}')

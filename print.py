@@ -2,6 +2,7 @@ import json
 import math
 
 import pose_similarity
+import pose_similarity_alt
 
 part_names = ["head", "neck", "rshoulder", "relbow", "rhand", "lshoulder", "leblow", "lhand",
                   "rhip", "rknee", "rfoot", "lhip", "lknee", "lfoot", "reye", "leye", "rear", "lear"]
@@ -51,7 +52,25 @@ def main():
     print("Percent accurate: " + str(1 - framesoff/min(video1json, video2json)))
     print("Frames wrong: ")
     for frame in frameswrong:
-        print("Frame " + str(frame))
+        print("Frame " + str(frame + 1))
+
+    print("--------------------------------")
+    print("Second Method")
+    framesoff = 0
+    frameswrong = []
+    for i in range(0, len(video1)):
+        print("Average error on frame " + str(i + 1) + ": " + "%.3f" % pose_similarity_alt.averageError(i, video1, video2))
+
+        if pose_similarity_alt.averageError(i, video1, video2) > 0.2:
+            framesoff += 1
+            frameswrong.append(i)
+
+    print("--------------------------------")
+    print(str(framesoff) + " frames of " + str(min(video1json, video2json)) + " wrong")
+    print("Percent accurate: " + str(1 - framesoff / min(video1json, video2json)))
+    print("Frames wrong: ")
+    for frame in frameswrong:
+        print("Frame " + str(frame + 1))
 
 
 if __name__ == "__main__":

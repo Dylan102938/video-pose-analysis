@@ -27,7 +27,7 @@ def parsevideo(file, path):
         if not ret:
             break
 
-        if frameid % math.floor(framerate / math.floor(1/0.15)) == 0:
+        if frameid % math.floor(framerate / math.floor(1/0.1)) == 0:
             filename = path + 'frame' + str(int(x)).zfill(6) + ".jpg"
             print(filename)
             x += 1
@@ -39,10 +39,10 @@ def parsevideo(file, path):
 
 def main():
     path = "videos/"
-    base_extension_file = "derek.mp4"
+    base_extension_file = "dancing.mp4"
     base_file = path + base_extension_file
 
-    compare_extension_file = "derek2.mp4"
+    compare_extension_file = "dancing-compare.mp4"
     compare_file = path + compare_extension_file
 
     base_videos = "images/base-videos/"
