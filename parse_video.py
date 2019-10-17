@@ -16,18 +16,7 @@ def cleardirectory(path):
             print(e)
 
 
-def main():
-    base_file = "videos/"
-    extension_file = "dancing.mp4"
-    file = base_file + extension_file
-
-    base_videos = "images/base-videos/"
-    compare_videos = "images/compare-videos/"
-
-    # clear image folders
-    cleardirectory(base_videos)
-    cleardirectory(compare_videos)
-
+def parsevideo(file, path):
     cap = cv2.VideoCapture(file)
     framerate = cap.get(5)  # frame rate
     x = 1
@@ -38,14 +27,35 @@ def main():
         if not ret:
             break
 
-        if frameid % math.floor(framerate) == 0 or frameid % math.floor(framerate) == math.floor(framerate/2):
-            filename = base_videos + 'frame' + str(int(x)).zfill(6) + ".jpg"
+        if frameid % math.floor(framerate/10) == 0:
+            filename = path + 'frame' + str(int(x)).zfill(6) + ".jpg"
             print(filename)
             x += 1
             cv2.imwrite(filename, frame)
 
     cap.release()
     print("Done!")
+
+
+def main():
+    path = "videos/"
+    base_extension_file = "derek.mp4"
+    base_file = path + base_extension_file
+
+    compare_extension_file = "derek2.mp4"
+    compare_file = path + compare_extension_file
+
+    base_videos = "images/base-videos/"
+    compare_videos = "images/compare-videos/"
+
+    # clear image folders
+    cleardirectory(base_videos)
+    cleardirectory(compare_videos)
+
+    # parse videos
+    parsevideo(base_file, base_videos)
+    parsevideo(compare_file, compare_videos)
+
 
 
 if __name__ == '__main__':

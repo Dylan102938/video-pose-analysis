@@ -9,14 +9,6 @@ from tf_pose import common
 import os
 import parse_video
 
-logger = logging.getLogger('TfPoseEstimatorRun')
-logger.handlers.clear()
-logger.setLevel(logging.DEBUG)
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-formatter = logging.Formatter('[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s')
-ch.setFormatter(formatter)
-logger.addHandler(ch)
 w = 0
 h = 0
 resize_out_ratio = 4.0
@@ -39,7 +31,6 @@ def pose_estimate(path, path_write):
     for file in images:
         image = common.read_imgfile(os.path.join(path, file), None, None)
         if image is None:
-            logger.error('Image can not be read, path=%s' % image)
             sys.exit(-1)
 
         t = time.time()
@@ -70,7 +61,6 @@ def pose_estimate(path, path_write):
                 outfile.write(frame_content)
 
         elapsed = time.time() - t
-        logger.info('inference image: %s in %.4f seconds.' % (image, elapsed))
         count += 1
 
     with open(path_write, 'a') as outfile:
