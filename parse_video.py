@@ -37,12 +37,12 @@ def parsevideo(file, path):
     print("Done!")
 
 
-def main():
+def main(basefile, comparefile):
     path = "videos/"
-    base_extension_file = "dancing.mp4"
+    base_extension_file = basefile
     base_file = path + base_extension_file
 
-    compare_extension_file = "dancing-compare.mp4"
+    compare_extension_file = comparefile
     compare_file = path + compare_extension_file
 
     base_videos = "images/base-videos/"

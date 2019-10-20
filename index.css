@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: radial-gradient(at 0% 0%, #007acc, #00ccff,#00ffcc);
+    max-height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.title {
+    color: rgba(255, 251, 244, 0.95);
+    font-family: "Dosis", sans-serif;
+    font-size:95px;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.half-screen {
+    width: 49%;
+    float: left;
+    margin-right: 2%;
+}
+
+.video-holder {
+    border: 2px solid white;
+    border-radius: 35px;
+    width: 640px;
+    height: 350px;
+    float: right;
+}
+
+.file-uplaod {
+    float: none;
+    margin-left: 100%;
+    margin-right: 320px;
+}
+
+.pretty-upload {
+    position: absolute;
+    margin-top: 370px;
+    font-family: "Catamaran", sans-serif;
+    font-size: 19px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
+    color: #ffffff;
+    border: 0px solid;
+    background-color: rgba(255, 251, 244, 0.5);
+    cursor: pointer;
+   transition-duration: 0.3s;
+}
+
+.pretty-upload:hover {
+    background-color: rgba(255, 251, 244, 0.75);
+}
+
+.pretty-upload:focus {
+    outline: none;
+}
+
+#base-file {
+    position: absolute;
+    margin-top: 370px;
+    left: 7.2%;
+    opacity: 0;
+}
+
+#compare-file {
+    position: absolute;
+    margin-top: 370px;
+    right: 3%;
+    opacity: 0;
+}
+
+#submit {
+
+    position: absolute;
+    display: block;
+    margin-top: 450px;
+    left: 87.6%;
+
+}
