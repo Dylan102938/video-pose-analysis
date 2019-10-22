@@ -4,6 +4,7 @@ import math
 import cv2
 
 
+# for clearing directories between each use
 def cleardirectory(path):
     for file in os.listdir(path):
         file_path = os.path.join(path, file)
@@ -16,12 +17,13 @@ def cleardirectory(path):
             print(e)
 
 
+# parses videos in small increments of time to account for different fps
 def parsevideo(file, path):
     cap = cv2.VideoCapture(file)
-    framerate = cap.get(5)  # frame rate
+    framerate = cap.get(5)
     x = 1
     while cap.isOpened():
-        frameid = cap.get(1)  # current frame number
+        frameid = cap.get(1)
         ret, frame = cap.read()
 
         if not ret:
@@ -37,12 +39,13 @@ def parsevideo(file, path):
     print("Done!")
 
 
-def main(basefile, comparefile):
+# main method to parse videos
+def main():
     path = "videos/"
-    base_extension_file = basefile
+    base_extension_file = "ethan.mp4"
     base_file = path + base_extension_file
 
-    compare_extension_file = comparefile
+    compare_extension_file = "derek2.mp4"
     compare_file = path + compare_extension_file
 
     base_videos = "images/base-videos/"
@@ -55,7 +58,6 @@ def main(basefile, comparefile):
     # parse videos
     parsevideo(base_file, base_videos)
     parsevideo(compare_file, compare_videos)
-
 
 
 if __name__ == '__main__':

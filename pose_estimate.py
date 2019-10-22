@@ -1,4 +1,3 @@
-import logging
 import sys
 import time
 import json
@@ -9,12 +8,13 @@ from tf_pose import common
 import os
 import cv2
 
+# scaling size to maintain consistent coordinates for videos
 w, h = model_wh('432x368')
 resize_out_ratio = 4.0
 
 e = TfPoseEstimator(get_graph_path("cmu"), target_size=(w, h))
 
-
+# pose estimate all parsed frames and write to a json file for easy access
 def pose_estimate(path, path_write):
     images = os.listdir(path)
     images.sort()
@@ -69,6 +69,8 @@ def pose_estimate(path, path_write):
     with open(path_write, 'a') as outfile:
         outfile.write(']}')
 
+
+# runs pose estimate on base and compare file
 def main():
 
     # clear directory

@@ -2,6 +2,7 @@ import json
 import math
 import os
 import shutil
+import os
 import pose_similarity
 
 part_names = ["head", "neck", "rshoulder", "relbow", "rhand", "lshoulder", "leblow", "lhand",
@@ -53,15 +54,16 @@ def main():
             video2[i][counter] = video2json[i][part_names[j] + 'y']
             counter += 1
 
+    for i in range(0, len(video1)):
         print("Average error on frame " + str(i + 1) + ": " + "%.3f" % pose_similarity.averageError(i, video1, video2))
 
-        if pose_similarity.averageError(i, video1, video2) > 0.1:
+        if pose_similarity.averageError(i, video1, video2) > 0.2:
             framesoff += 1
             frameswrong.append(i)
 
     print("--------------------------------")
     print(str(framesoff) + " frames of " + str(min(video1json, video2json)) + " wrong")
-    print("Percent accurate: " + str(1 - framesoff/min(video1json, video2json)))
+    print("Percent accurate: " + str(1 - framesoff / min(video1json, video2json)))
     print("Frames wrong: ")
     for frame in frameswrong:
         print("Frame " + str(frame + 1))
@@ -72,9 +74,9 @@ def main():
         basefilename = 'images/base-videos/' + 'frame' + str(frame).zfill(6) + ".jpg"
         comparefilename = 'images/compare-videos/' + 'frame' + str(frame).zfill(6) + ".jpg"
         if os.path.isfile(basefilename):
-            shutil.copy(basefilename, 'errorimages/base-' + str(frame*0.1) + 's.jpg')
+            shutil.copy(basefilename, 'errorimages/base-' + '%.3f' % (frame*0.1) + 's.jpg')
         if os.path.isfile(comparefilename):
-            shutil.copy(comparefilename, 'errorimages/compare-'+ str(frame*0.1) + 's.jpg')
+            shutil.copy(comparefilename, 'errorimages/compare-' + '%.3f' % (frame*0.1)  + 's.jpg')
 
 
 if __name__ == "__main__":
